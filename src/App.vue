@@ -1,38 +1,23 @@
 <template>
     <div>
         <app-header></app-header>
-        <form action="#" class="container">
+        <div class="container">
             <div class="row">
                 <div class="col s12 m12">
-                    <div class="card blue-grey darken-1">
-                        <div class="card-content white-text">
-                            <span class="card-title">1ª Escolha</span>
-                            <p>CARNE BOVINA</p>
-                            <label>
-                                <input type="checkbox" class="filled-in" checked="checked" />
-                                <span>1 Escondidinho de Carne de sol c/ macaxeira</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" class="filled-in" />
-                                <span>2 Carne de sol refogada na manteiga</span>
-                            </label>
-                        </div>
-                    </div>
+                    <span v-for="opcao in opcoesEscolhidas"> {{ opcao }}, </span>
                 </div>
             </div>
-            <div class="row">
+        </div>
+        <form action="#" class="container">
+            <div v-for="(escolha, index) in cardapio.escolhas" class="row">
                 <div class="col s12 m12">
                     <div class="card blue-grey darken-1">
                         <div class="card-content white-text">
-                            <span class="card-title">2ª Escolha</span>
-                            <p>FEIJÃO</p>
-                            <label>
-                                <input type="checkbox" class="filled-in" checked="checked" />
-                                <span>28 Corda c/ linguiça defumada</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" class="filled-in" />
-                                <span>29 Carioca c/ calabresa</span>
+                            <span class="card-title">{{ index + 1 }}ª Escolha</span>
+                            <!-- <p>CARNE BOVINA</p> -->
+                            <label v-for="opcao in escolha">
+                                <input :id="opcao.id" @change="escolhe" type="checkbox" class="filled-in" />
+                                <span>{{ opcao.id }} {{ opcao.nome }}</span>
                             </label>
                         </div>
                     </div>
@@ -46,6 +31,42 @@
 import Header from "./components/Header.vue";
 
 export default {
+    data: function() {
+        return {
+            cardapio: {
+                escolhas: [
+                    [
+                        { id: 1, nome: 'Escondidinho de Carne de sol' },
+                        { id: 6, nome: 'Bisteca bovina na chapa' },
+                        { id: 7, nome: 'Picadinho de carne c/ linguiça e batatas' },
+                        { id: 23, nome: 'Costelinha na brasa' }
+                    ],
+                    [
+                        { id: 28, nome: 'Corda c/ linguiça defumada' }
+                    ],
+                    [
+                        { id: 31, nome: 'Farofa de Lombo Picadinho' },
+                        { id: 32, nome: 'Farofa de torresmo' },
+                        { id: 33, nome: 'Farofa de manteiga' }
+                    ],
+                    [
+                        { id: 34, nome: 'Arroz branco soltinho' }
+                    ],
+                    [
+                        { id: 41, nome: 'Batata sauté' }
+                    ]
+                ]
+            },
+            opcoesEscolhidas: []
+        };        
+    },
+    methods: {
+        escolhe(event) {
+            if (!this.opcoesEscolhidas.includes(event.target.id)) {
+                this.opcoesEscolhidas.push(event.target.id);
+            }
+        }
+    },
     components: {
         appHeader: Header
     }
