@@ -64,6 +64,9 @@ export default {
         escolhe(event) {
             if (!this.opcoesEscolhidas.includes(event.target.id)) {
                 this.opcoesEscolhidas.push(event.target.id);
+            } else {
+                const index = this.opcoesEscolhidas.indexOf(event.target.id);
+                this.opcoesEscolhidas.splice(index, 1);
             }
         }
     },
